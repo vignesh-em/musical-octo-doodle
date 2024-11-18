@@ -3,6 +3,7 @@ package com.example.coin.ui.list
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,8 +23,13 @@ fun CryptoListScreen(
             CoinSearchBar(query = query, onQueryChange = viewModel::updateQuery)
         },
     ) { paddingValues ->
-        LazyColumn(modifier = Modifier.padding(paddingValues)) {
 
+        val coins by viewModel.coins.collectAsState()
+
+        LazyColumn(modifier = Modifier.padding(paddingValues)) {
+            items(coins.size) { index ->
+                Text(text = coins[index].name)
+            }
         }
     }
 }
