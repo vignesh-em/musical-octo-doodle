@@ -27,7 +27,9 @@ class CryptoListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getCoinsUseCase()
-                .collect { coins -> _coins.value = coins }
+                .collect { coins ->
+                    _coins.value = coins
+                }
         }
     }
 }

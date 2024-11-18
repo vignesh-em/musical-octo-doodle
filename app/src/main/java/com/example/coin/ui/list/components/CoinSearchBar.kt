@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coin.R
 
@@ -43,4 +44,10 @@ fun CoinSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modi
     ) {
 
     }
+}
+
+@Preview
+@Composable
+private fun CoinSearchBarPreview() {
+    CoinSearchBar(query = "", onQueryChange = {})
 }

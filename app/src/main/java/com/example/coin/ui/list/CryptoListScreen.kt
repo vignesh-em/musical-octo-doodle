@@ -2,6 +2,7 @@ package com.example.coin.ui.list
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coin.ui.list.components.CoinSearchBar
+import com.example.coin.ui.list.components.CryptoItem
 
 @Composable
 fun CryptoListScreen(
@@ -27,8 +29,11 @@ fun CryptoListScreen(
         val coins by viewModel.coins.collectAsState()
 
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
-            items(coins.size) { index ->
-                Text(text = coins[index].name)
+            items(
+                items = coins,
+                key = { crypto -> crypto.symbol }
+            ) { crypto ->
+                CryptoItem(crypto)
             }
         }
     }
