@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.2"
+androidXHilt = "1.2.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
 hiltAndroid = "2.51.1"
@@ -21,6 +22,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidXHilt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltAndroid" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
