@@ -3,18 +3,18 @@ package com.example.coin.data
 import com.example.coin.data.models.toCrypto
 import com.example.coin.data.models.toEntity
 import com.example.coin.data.source.database.CryptoDao
-import com.example.coin.data.source.network.CoinNetworkDataSource
+import com.example.coin.data.source.network.CryptoNetworkDataSource
 import javax.inject.Inject
 import kotlinx.coroutines.flow.flow
 
-class DefaultCoinRepository @Inject constructor(
+class DefaultCryptoRepository @Inject constructor(
     private val cryptoDao: CryptoDao,
-    private val networkDataSource: CoinNetworkDataSource,
-) : CoinRepository {
+    private val networkDataSource: CryptoNetworkDataSource,
+) : CryptoRepository {
 
-    override suspend fun getCoins() = flow {
+    override suspend fun getCryptos() = flow {
         val coins = cryptoDao
-            .getCoins()
+            .getCryptos()
             .map { crypto -> crypto.toCrypto() }
 
         if (coins.isNotEmpty()) {
@@ -23,7 +23,7 @@ class DefaultCoinRepository @Inject constructor(
         }
 
         val coinsFromNetwork = networkDataSource
-            .getCoins()
+            .getCrypto()
             .map { crypto -> crypto.toCrypto() }
 
         cryptoDao.insertCoins(

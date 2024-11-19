@@ -1,7 +1,7 @@
 package com.example.coin.data.models
 
 import com.example.coin.data.source.database.CryptoEntity
-import com.example.coin.data.source.network.NetworkCypto
+import com.example.coin.data.source.network.NetworkCrypto
 
 data class Crypto(
     val name: String,
@@ -13,7 +13,7 @@ data class Crypto(
 
 enum class Type { Coin, Token }
 
-fun NetworkCypto.toCrypto() = Crypto(
+fun NetworkCrypto.toCrypto() = Crypto(
     name,
     symbol,
     isNew,

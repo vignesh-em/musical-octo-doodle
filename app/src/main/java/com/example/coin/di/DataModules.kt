@@ -2,12 +2,12 @@ package com.example.coin.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.coin.data.CoinRepository
-import com.example.coin.data.DefaultCoinRepository
+import com.example.coin.data.CryptoRepository
+import com.example.coin.data.DefaultCryptoRepository
 import com.example.coin.data.source.database.CryptoDatabase
-import com.example.coin.data.source.network.CoinNetworkDataSource
+import com.example.coin.data.source.network.CryptoNetworkDataSource
 import com.example.coin.data.source.network.CryptoApi
-import com.example.coin.data.source.network.RetrofitCoinNetworkDataSource
+import com.example.coin.data.source.network.RetrofitCryptoNetworkDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -44,7 +44,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideCoinNetworkDataSource(dataSource: RetrofitCoinNetworkDataSource): CoinNetworkDataSource =
+    fun provideCryptoNetworkDataSource(dataSource: RetrofitCryptoNetworkDataSource): CryptoNetworkDataSource =
         dataSource
 }
 
@@ -53,7 +53,7 @@ object NetworkModule {
 abstract class RepositoryModule {
     @Singleton
     @Binds
-    abstract fun bindCoinRepository(repository: DefaultCoinRepository): CoinRepository
+    abstract fun bindCryptoRepository(repository: DefaultCryptoRepository): CryptoRepository
 }
 
 @Module

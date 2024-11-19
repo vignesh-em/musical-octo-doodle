@@ -1,6 +1,6 @@
 package com.example.coin.domain
 
-import com.example.coin.data.CoinRepository
+import com.example.coin.data.CryptoRepository
 import com.example.coin.data.models.Crypto
 import com.example.coin.data.models.Type
 import kotlinx.coroutines.flow.first
@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class GetCoinsUseCaseTest {
+class GetCryptosUseCaseTest {
     @Test
     fun `crypto list comes in sorted order`() = runTest {
-        val repo = CoinRepository {
+        val repo = CryptoRepository {
             flow {
                 emit(
                     listOf(
@@ -33,7 +33,7 @@ class GetCoinsUseCaseTest {
                 )
             }
         }
-        val useCase = GetCoinsUseCase(repo)
+        val useCase = GetCryptosUseCase(repo)
 
         val result = useCase().first()
 

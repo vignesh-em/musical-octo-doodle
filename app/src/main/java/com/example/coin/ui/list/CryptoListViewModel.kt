@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coin.data.models.Crypto
 import com.example.coin.domain.FilterCryptosUseCase
-import com.example.coin.domain.GetCoinsUseCase
+import com.example.coin.domain.GetCryptosUseCase
 import com.example.coin.domain.SearchCryptosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class CryptoListViewModel @Inject constructor(
-    private val getCoinsUseCase: GetCoinsUseCase,
+    private val getCryptosUseCase: GetCryptosUseCase,
     private val filterCryptosUseCase: FilterCryptosUseCase,
     private val searchCryptosUseCase: SearchCryptosUseCase,
 ) : ViewModel() {
@@ -73,7 +73,7 @@ class CryptoListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getCoinsUseCase()
+            getCryptosUseCase()
                 .catch { _error.value = true }
                 .collect { coins ->
                     _error.value = false

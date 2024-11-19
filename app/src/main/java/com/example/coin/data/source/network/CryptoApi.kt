@@ -4,5 +4,5 @@ import retrofit2.http.GET
 
 interface CryptoApi {
     @GET("/")
-    suspend fun getCoins(): List<NetworkCypto>
+    suspend fun getCryptos(): List<NetworkCrypto>
 }

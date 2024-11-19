@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NetworkCypto(
+data class NetworkCrypto(
     val name: String,
     val symbol: String,
     @SerialName("is_new") val isNew: Boolean,

@@ -9,7 +9,7 @@ import androidx.room.Query
 interface CryptoDao {
 
     @Query("SELECT * FROM crypto")
-    suspend fun getCoins(): List<CryptoEntity>
+    suspend fun getCryptos(): List<CryptoEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCoins(cryptos: List<CryptoEntity>)
