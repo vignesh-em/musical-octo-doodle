@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coin.ui.list.components.CoinChipGroup
 import com.example.coin.ui.list.components.CoinSearchBar
@@ -40,7 +41,7 @@ fun CryptoListScreen(
                 items = coins,
                 key = { crypto -> crypto.symbol }
             ) { crypto ->
-                CryptoItem(crypto)
+                CryptoItem(crypto, modifier = Modifier.padding(horizontal = 8.dp))
             }
         }
     }

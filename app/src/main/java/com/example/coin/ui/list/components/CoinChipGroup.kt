@@ -66,7 +66,12 @@ private fun CoinFilterChip(
     FilterChip(
         selected,
         leadingIcon = { if (selected) Icon(Icons.Filled.Done, null) },
-        label = { Text(stringResource(filter.filterName)) },
+        label = {
+            Text(
+                stringResource(filter.filterName),
+                style = MaterialTheme.typography.bodySmall
+            )
+        },
         onClick = {
             selected = !selected
             if (selected) onFilterAdd(filter)

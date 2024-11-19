@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,10 @@ fun CoinSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modi
         active = false,
         onActiveChange = { },
         placeholder = {
-            Text(stringResource(R.string.search_bar_placeholder))
+            Text(
+                stringResource(R.string.search_bar_placeholder),
+                style = MaterialTheme.typography.titleMedium
+            )
         },
         leadingIcon = {
             Icon(

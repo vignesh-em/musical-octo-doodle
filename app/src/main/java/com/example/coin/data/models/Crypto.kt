@@ -36,3 +36,5 @@ fun Crypto.toEntity() = CryptoEntity(
     isActive,
     type,
 )
+
+fun Crypto.isCoin() = type == Type.Coin
