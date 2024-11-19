@@ -38,8 +38,12 @@ fun CryptoItem(crypto: Crypto, modifier: Modifier = Modifier) {
             Text(text = crypto.name, style = MaterialTheme.typography.bodySmall)
         }
 
-        Box(contentAlignment = Alignment.Center) {
+        Box {
             Image(painter = painterResource(getCryptoIcon(crypto)), contentDescription = null)
+
+            if (crypto.isNew) {
+                NewCoinTag(modifier = Modifier.align(Alignment.BottomEnd))
+            }
         }
     }
 }
@@ -57,7 +61,7 @@ private fun CryptoItemPreview() {
         crypto = Crypto(
             name = "Bitcoin",
             symbol = "BTC",
-            isNew = false,
+            isNew = true,
             isActive = true,
             type = Type.Coin
         ),

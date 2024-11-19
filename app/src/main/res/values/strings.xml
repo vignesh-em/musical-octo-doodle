@@ -8,4 +8,5 @@
     <string name="filter_new_coins">New Coins</string>
     <string name="filter_only_coins">Only Coins</string>
     <string name="filter_only_tokens">Only Tokens</string>
+    <string name="tag_new">new</string>
 </resources>
