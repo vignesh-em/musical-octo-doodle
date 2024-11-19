@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coin.R
 
@@ -41,7 +42,9 @@ private fun NoListState(
         Image(
             painter = painterResource(icon),
             contentDescription = null,
-            modifier = Modifier.size(72.dp).rotate(rotation)
+            modifier = Modifier
+                .size(72.dp)
+                .rotate(rotation)
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
@@ -76,4 +79,22 @@ fun ListLoadingState(modifier: Modifier = Modifier) {
     )
 
     NoListState(R.mipmap.ic_active_token, R.string.loading, modifier, rotation)
+}
+
+@Preview
+@Composable
+private fun EmptyStatePreview() {
+    EmptyState()
+}
+
+@Preview
+@Composable
+private fun ErrorStatePreview() {
+    ErrorState()
+}
+
+@Preview
+@Composable
+private fun LoadingStatePreview() {
+    ListLoadingState()
 }
