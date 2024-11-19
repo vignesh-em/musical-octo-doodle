@@ -33,7 +33,7 @@ fun CryptoListScreen(
         }
     ) { paddingValues ->
 
-        val coins by viewModel.coins.collectAsState()
+        val coins by viewModel.cryptoList.collectAsState()
 
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             items(

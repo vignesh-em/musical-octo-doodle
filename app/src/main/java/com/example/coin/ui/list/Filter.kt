@@ -5,7 +5,7 @@ import com.example.coin.R
 import com.example.coin.data.models.Crypto
 import com.example.coin.data.models.Type
 
-enum class Filter(@StringRes val filterName: Int, predicate: (Crypto) -> Boolean) {
+enum class Filter(@StringRes val filterName: Int, val predicate: (Crypto) -> Boolean) {
     ActiveCoins(
         filterName = R.string.filter_active_coins,
         predicate = { crypto -> crypto.isActive }),
