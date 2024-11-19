@@ -8,13 +8,17 @@ import com.example.coin.domain.GetCoinsUseCase
 import com.example.coin.domain.SearchCryptosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class CryptoListViewModel @Inject constructor(
     private val getCoinsUseCase: GetCoinsUseCase,
@@ -28,16 +32,20 @@ class CryptoListViewModel @Inject constructor(
 
     private val _activeFilters = MutableStateFlow<List<Filter>>(emptyList())
 
-    val cryptoList = _allCoins
+    val uiState = _allCoins
         .combine(query) { coins, query ->
             searchCryptosUseCase(coins, query)
         }
         .combine(_activeFilters) { coins, filters ->
-            filterCryptosUseCase(
-                coins,
-                filters.map { filter -> filter.predicate })
+            filterCryptosUseCase(coins, filters.map { filter -> filter.predicate })
         }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+        .mapLatest { coins ->
+            if (coins.isEmpty()) {
+                delay(500)
+                UiState.Empty
+            } else UiState.Success(coins)
+        }
+        .stateIn(viewModelScope, SharingStarted.Lazily, UiState.Loading)
 
     fun updateQuery(newQuery: String) {
         _query.value = newQuery
