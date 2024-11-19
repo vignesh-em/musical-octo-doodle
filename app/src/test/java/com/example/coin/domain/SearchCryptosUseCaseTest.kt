@@ -1,5 +1,6 @@
 package com.example.coin.domain
 
+import com.example.coin.createCrypto
 import com.example.coin.data.models.Crypto
 import com.example.coin.data.models.Type
 import junit.framework.TestCase.assertEquals
@@ -10,7 +11,7 @@ class SearchCryptosUseCaseTest {
     @Test
     fun `cryptos with matching names are returned`() {
         val useCase = SearchCryptosUseCase()
-        val bitcoin = Crypto(
+        val bitcoin = createCrypto(
             name = "Bitcoin",
             symbol = "BTC",
             isNew = false,
@@ -20,12 +21,9 @@ class SearchCryptosUseCaseTest {
         val results = useCase(
             listOf(
                 bitcoin,
-                Crypto(
+                createCrypto(
                     name = "Ethereum",
                     symbol = "ETH",
-                    isNew = false,
-                    isActive = true,
-                    type = Type.Coin
                 )
             ), "bit"
         )
@@ -36,7 +34,7 @@ class SearchCryptosUseCaseTest {
     @Test
     fun `cryptos with matching symbols are returned`() {
         val useCase = SearchCryptosUseCase()
-        val ethereum = Crypto(
+        val ethereum = createCrypto(
             name = "Another coin",
             symbol = "ETH",
             isNew = false,
@@ -45,12 +43,9 @@ class SearchCryptosUseCaseTest {
         )
         val results = useCase(
             listOf(
-                Crypto(
+                createCrypto(
                     name = "Bitcoin",
                     symbol = "BTC",
-                    isNew = false,
-                    isActive = true,
-                    type = Type.Coin
                 ),
                 ethereum
             ), "ETH"
