@@ -24,14 +24,15 @@ class CryptoListViewModel @Inject constructor(
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query
 
-    private val allCoins = MutableStateFlow<List<Crypto>>(emptyList())
+    private val _allCoins = MutableStateFlow<List<Crypto>>(emptyList())
 
-    private val activeFilters = MutableStateFlow<List<Filter>>(emptyList())
+    private val _activeFilters = MutableStateFlow<List<Filter>>(emptyList())
 
-    private val _cryptoList = MutableStateFlow<List<Crypto>>(emptyList())
-    val cryptoList = allCoins
-        .combine(_query) { coins, query -> searchCryptosUseCase(coins, query) }
-        .combine(activeFilters) { coins, filters ->
+    val cryptoList = _allCoins
+        .combine(query) { coins, query ->
+            searchCryptosUseCase(coins, query)
+        }
+        .combine(_activeFilters) { coins, filters ->
             filterCryptosUseCase(
                 coins,
                 filters.map { filter -> filter.predicate })
@@ -43,31 +44,23 @@ class CryptoListViewModel @Inject constructor(
     }
 
     fun onFilterAdd(filter: Filter) {
-        activeFilters.value.toMutableList().let { newFilters ->
-            newFilters.add(filter)
-            activeFilters.value = newFilters
-        }
-        updateFilteredCoins()
-    }
-
-    private fun updateFilteredCoins() {
-        _cryptoList.value = filterCryptosUseCase(
-            _cryptoList.value,
-            activeFilters.value.map { activeFilter -> activeFilter.predicate })
+        _activeFilters.value
+            .toMutableList()
+            .apply { add(filter) }
+            .let { newFilters -> _activeFilters.value = newFilters }
     }
 
     fun onFilterRemove(filter: Filter) {
-        activeFilters.value.toMutableList().let { newFilters ->
-            newFilters.remove(filter)
-            activeFilters.value = newFilters
-        }
-        updateFilteredCoins()
+        _activeFilters.value
+            .toMutableList()
+            .apply { remove(filter) }
+            .let { newFilters -> _activeFilters.value = newFilters }
     }
 
     init {
         viewModelScope.launch {
             getCoinsUseCase()
-                .collect { coins -> allCoins.value = coins }
+                .collect { coins -> _allCoins.value = coins }
         }
     }
 }
