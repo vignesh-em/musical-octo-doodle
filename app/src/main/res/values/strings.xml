@@ -9,4 +9,5 @@
     <string name="filter_only_coins">Only Coins</string>
     <string name="filter_only_tokens">Only Tokens</string>
     <string name="tag_new">new</string>
+    <string name="no_coins_found">No coins found</string>
 </resources>

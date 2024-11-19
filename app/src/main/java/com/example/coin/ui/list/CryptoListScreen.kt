@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coin.ui.list.components.CoinChipGroup
 import com.example.coin.ui.list.components.CoinSearchBar
 import com.example.coin.ui.list.components.CryptoItem
+import com.example.coin.ui.list.components.EmptyState
 
 @Composable
 fun CryptoListScreen(
@@ -36,12 +37,16 @@ fun CryptoListScreen(
 
         val coins by viewModel.cryptoList.collectAsState()
 
-        LazyColumn(modifier = Modifier.padding(paddingValues)) {
-            items(
-                items = coins,
-                key = { crypto -> crypto.symbol }
-            ) { crypto ->
-                CryptoItem(crypto, modifier = Modifier.padding(horizontal = 8.dp))
+        if (coins.isEmpty()) {
+            EmptyState(modifier = Modifier.padding(paddingValues))
+        } else {
+            LazyColumn(modifier = Modifier.padding(paddingValues)) {
+                items(
+                    items = coins,
+                    key = { crypto -> crypto.symbol }
+                ) { crypto ->
+                    CryptoItem(crypto, modifier = Modifier.padding(horizontal = 8.dp))
+                }
             }
         }
     }
