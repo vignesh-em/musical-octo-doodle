@@ -24,6 +24,14 @@ class CryptoListViewModel @Inject constructor(
         _query.value = newQuery
     }
 
+    fun onFilterAdd(filter: Filter) {
+
+    }
+
+    fun onFilterRemove(filter: Filter) {
+
+    }
+
     init {
         viewModelScope.launch {
             getCoinsUseCase()
