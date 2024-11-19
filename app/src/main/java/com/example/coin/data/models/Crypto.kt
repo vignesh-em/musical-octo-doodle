@@ -1,5 +1,6 @@
 package com.example.coin.data.models
 
+import com.example.coin.data.source.database.CryptoEntity
 import com.example.coin.data.source.network.NetworkCypto
 
 data class Crypto(
@@ -17,5 +18,21 @@ fun NetworkCypto.toCrypto() = Crypto(
     symbol,
     isNew,
     isActive,
-    if (type == "coin") Type.Coin else Type.Token
+    if (type == "coin") Type.Coin else Type.Token,
+)
+
+fun CryptoEntity.toCrypto() = Crypto(
+    name,
+    symbol,
+    isNew,
+    isActive,
+    type,
+)
+
+fun Crypto.toEntity() = CryptoEntity(
+    name,
+    symbol,
+    isNew,
+    isActive,
+    type,
 )

@@ -1,7 +1,10 @@
 package com.example.coin.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.coin.data.CoinRepository
 import com.example.coin.data.DefaultCoinRepository
+import com.example.coin.data.source.database.CryptoDatabase
 import com.example.coin.data.source.network.CoinNetworkDataSource
 import com.example.coin.data.source.network.CryptoApi
 import com.example.coin.data.source.network.RetrofitCoinNetworkDataSource
@@ -9,6 +12,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import kotlinx.serialization.json.Json
@@ -50,4 +54,20 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindCoinRepository(repository: DefaultCoinRepository): CoinRepository
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): CryptoDatabase {
+        return Room
+            .databaseBuilder(context, CryptoDatabase::class.java, "crypto-database.db")
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCryptoDao(database: CryptoDatabase) = database.cryptoDao()
 }
