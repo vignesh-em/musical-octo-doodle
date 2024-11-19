@@ -3,7 +3,7 @@ package com.example.coin.ui.list
 import androidx.annotation.StringRes
 import com.example.coin.R
 import com.example.coin.data.models.Crypto
-import com.example.coin.data.models.Type
+import com.example.coin.data.models.isCoin
 
 enum class Filter(@StringRes val filterName: Int, val predicate: (Crypto) -> Boolean) {
     ActiveCoins(
@@ -18,9 +18,9 @@ enum class Filter(@StringRes val filterName: Int, val predicate: (Crypto) -> Boo
 
     OnlyCoins(
         filterName = R.string.filter_only_coins,
-        predicate = { crypto -> crypto.type == Type.Coin }),
+        predicate = { crypto -> crypto.isCoin() }),
 
     OnlyTokens(
         filterName = R.string.filter_only_tokens,
-        predicate = { crypto -> crypto.type == Type.Token }),
+        predicate = { crypto -> !crypto.isCoin() }),
 }
