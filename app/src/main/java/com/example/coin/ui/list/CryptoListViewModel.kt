@@ -13,8 +13,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -32,6 +36,8 @@ class CryptoListViewModel @Inject constructor(
 
     private val _activeFilters = MutableStateFlow<List<Filter>>(emptyList())
 
+    private val _error = MutableStateFlow(false)
+
     val uiState = _allCoins
         .combine(query) { coins, query ->
             searchCryptosUseCase(coins, query)
@@ -44,6 +50,9 @@ class CryptoListViewModel @Inject constructor(
                 delay(500)
                 UiState.Empty
             } else UiState.Success(coins)
+        }
+        .combine(_error) { state, error ->
+            if (error) UiState.Error else state
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, UiState.Loading)
 
@@ -68,7 +77,11 @@ class CryptoListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getCoinsUseCase()
-                .collect { coins -> _allCoins.value = coins }
+                .catch { _error.value = true }
+                .collect { coins ->
+                    _error.value = false
+                    _allCoins.value = coins
+                }
         }
     }
 }

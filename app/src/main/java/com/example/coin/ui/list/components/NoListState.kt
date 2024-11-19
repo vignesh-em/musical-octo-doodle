@@ -1,5 +1,7 @@
 package com.example.coin.ui.list.components
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -21,50 +23,57 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coin.R
-import com.example.coin.ui.theme.CoinTheme
 
 @Composable
-fun ListLoadingState(modifier: Modifier = Modifier) {
+private fun NoListState(
+    @DrawableRes icon: Int,
+    @StringRes text: Int,
+    modifier: Modifier = Modifier,
+    rotation: Float = 0f,
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        val infiniteTransition = rememberInfiniteTransition(label = "infinite")
-
-        val rotation by infiniteTransition.animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            label = "rotation",
-            animationSpec = infiniteRepeatable(
-                animation = tween(5_000, easing = LinearEasing),
-                repeatMode = RepeatMode.Restart
-            )
-        )
-
         Image(
-            painter = painterResource(R.mipmap.ic_active_token),
+            painter = painterResource(icon),
             contentDescription = null,
-            modifier = Modifier
-                .size(72.dp)
-                .rotate(rotation)
+            modifier = Modifier.size(72.dp).rotate(rotation)
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
-            stringResource(R.string.loading),
+            stringResource(text),
             style = MaterialTheme.typography.titleMedium
         )
     }
 }
 
-@Preview
 @Composable
-private fun ListLoadingStatePreview() {
-    CoinTheme {
-        ListLoadingState()
-    }
+fun ErrorState(modifier: Modifier = Modifier) {
+    NoListState(R.mipmap.ic_inactive, R.string.something_went_wrong, modifier)
+}
+
+@Composable
+fun EmptyState(modifier: Modifier = Modifier) {
+    NoListState(R.mipmap.ic_active_coin, R.string.no_coins_found, modifier)
+}
+
+@Composable
+fun ListLoadingState(modifier: Modifier = Modifier) {
+    val infiniteTransition = rememberInfiniteTransition(label = "infinite")
+
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        label = "rotation",
+        animationSpec = infiniteRepeatable(
+            animation = tween(5_000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        )
+    )
+
+    NoListState(R.mipmap.ic_active_token, R.string.loading, modifier, rotation)
 }
