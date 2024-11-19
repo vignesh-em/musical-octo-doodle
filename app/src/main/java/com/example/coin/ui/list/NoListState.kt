@@ -1,4 +1,4 @@
-package com.example.coin.ui.list.components
+package com.example.coin.ui.list
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

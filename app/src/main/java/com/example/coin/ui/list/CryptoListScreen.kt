@@ -2,7 +2,6 @@ package com.example.coin.ui.list
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,10 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coin.ui.list.components.CoinChipGroup
 import com.example.coin.ui.list.components.CoinSearchBar
-import com.example.coin.ui.list.components.CryptoList
-import com.example.coin.ui.list.components.EmptyState
-import com.example.coin.ui.list.components.ErrorState
-import com.example.coin.ui.list.components.ListLoadingState
 
 @Composable
 fun CryptoListScreen(
